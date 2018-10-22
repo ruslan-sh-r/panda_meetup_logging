@@ -1,5 +1,6 @@
 import * as express from 'express';
 import {createLogger, transports, format} from 'winston';
+import {Logstash} from 'winston-logstash'
 
 const app =  express()
 
@@ -16,9 +17,9 @@ const logger = createLogger({
         new transports.Console({
             level: 'debug',
             format: format.combine(
-                // format.timestamp(),              // Adds info.timestamp
-                // format.colorize(),               // Colorizes { level, message } on the info
-                // format.align(),                  // Prepends message with `\t`
+                format.timestamp(),              // Adds info.timestamp
+                format.colorize(),               // Colorizes { level, message } on the info
+                format.align(),                  // Prepends message with `\t`
                 format.printf(formatMessage)
             )
         }),
@@ -30,9 +31,23 @@ const logger = createLogger({
                 format.printf(formatMessage)
             ),
             handleExceptions: true
+        }),
+        new Logstash({
+            port: 28777,
+            host: '127.0.0.1',
+            format: format.combine(
+                format.timestamp(),              // Adds info.timestamp
+                format.json()
+            ),
+            handleExceptions: true
         })
     ],
     exitOnError: false
+})
+
+app.get('/', (req, res) => {
+    logger.info('request recieved');
+    res.send('Service1 success');
 })
 
 app.listen(3001, () => {
