@@ -2,12 +2,11 @@ version: '3'
 services:
   elasticsearch:
     image: elasticsearch:6.4.1
-    container_name: elasticsearch
+    container_name: elasticsearch1
     environment:
-      - node.name=elasticsearch1
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
     ports:
       - 9200:9200
       - 9300:9300
@@ -28,17 +27,17 @@ services:
   #   depends_on:
   #     - elasticsearch
       
-  # kibana:
-  #   image: kibana:5.1.2
-  #   container_name: kibana
-  #   ports:
-  #     - 5601:5601
-  #   volumes:
-  #     - $PWD/kibana/config/kibana.yml:/etc/kibana/kibana.yml
-  #   networks:
-  #     - network1
-  #   depends_on:
-  #     - elasticsearch
+  kibana:
+    image: kibana:5.1.2
+    container_name: kibana
+    ports:
+      - 5601:5601
+    volumes:
+      - $PWD/kibana/config/kibana.yml:/etc/kibana/kibana.yml
+    networks:
+      - network1
+    depends_on:
+      - elasticsearch
 
 volumes:
    es-data:
@@ -46,3 +45,4 @@ volumes:
 
 networks:
    network1:
+    driver: bridge
