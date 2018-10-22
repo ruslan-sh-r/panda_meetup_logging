@@ -28,7 +28,7 @@ services:
   #     - elasticsearch
       
   kibana:
-    image: kibana:5.1.2
+    image: kibana:6.4.1
     container_name: kibana
     ports:
       - 5601:5601
