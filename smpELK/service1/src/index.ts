@@ -1,6 +1,6 @@
 import * as express from 'express';
 import {createLogger, transports, format} from 'winston';
-import {Logstash} from 'winston-logstash'
+import { LogstashTransport } from 'winston-logstash-transport'
 
 const app =  express()
 
@@ -32,7 +32,7 @@ const logger = createLogger({
             ),
             handleExceptions: true
         }),
-        new Logstash({
+        new LogstashTransport({
             port: 28777,
             host: '127.0.0.1',
             format: format.combine(

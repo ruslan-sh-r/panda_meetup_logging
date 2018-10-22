@@ -36,7 +36,8 @@ services:
       - elasticsearch
 
 volumes:
-   mongodata:
+   es-data:
+    driver: local
 
 networks:
    network1:
