@@ -1,7 +1,7 @@
 {
     "name": "sample_app",
     "version": "1.0.0",
-    "description": "sample application  - panda meetup",
+    "description": "Sample application  - panda meetup. Service1",
     "main": "index.js",
     "scripts": {
         "build": "npm install && tsc",
@@ -26,6 +26,7 @@
     },
     "devDependencies": {
         "@types/express": "^4.16.0",
+        "@types/express-winston": "^3.0.0",
         "@types/node": "^10.9.4",
         "typescript": "^3.0.3"
     }
