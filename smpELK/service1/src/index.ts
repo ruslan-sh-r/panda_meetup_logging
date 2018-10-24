@@ -36,7 +36,6 @@ const logger = createLogger({
             port: 28777,
             host: '127.0.0.1',
             format: format.combine(
-                format.timestamp(),              // Adds info.timestamp
                 format.json()
             ),
             handleExceptions: true
