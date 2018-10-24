@@ -12,6 +12,20 @@ const formatMessage = info => {
     return `[${timestamp}] ${level}: ${message}\n${meta}`;
 }
 
+const addServiceId = format(info => {
+    info.service = 'service1';
+    return info;
+});
+
+const addErrorStack = format(info => {
+    const metas = (<any>info)[Symbol.for('splat')];
+    const errorObj = metas && metas.find(x => x instanceof Error);
+    if (errorObj)
+        info.error = errorObj.stack;
+
+    return info;
+});
+
 const logger = createLogger({
     transports:[
         new transports.Console({
@@ -36,6 +50,8 @@ const logger = createLogger({
             port: 28777,
             host: '127.0.0.1',
             format: format.combine(
+                addServiceId(),
+                addErrorStack(),
                 format.json()
             ),
             handleExceptions: true
