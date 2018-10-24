@@ -1,0 +1,33 @@
+{
+    "name": "sample_app",
+    "version": "1.0.0",
+    "description": "Sample application  - panda meetup. Service2",
+    "main": "index.js",
+    "scripts": {
+        "build": "npm install && tsc",
+        "prestart": "npm run build",
+        "start": "node dist/index.js",
+        "qstart": "node dist/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ruslan-sh-r/panda_meetup_logging.git"
+    },
+    "author": "Ruslan",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ruslan-sh-r/panda_meetup_logging/issues"
+    },
+    "homepage": "https://github.com/ruslan-sh-r/panda_meetup_logging#readme",
+    "dependencies": {
+        "express": "^4.16.4",
+        "winston": "^3.1.0",
+        "winston-logstash-transport": "^2.0.0"
+    },
+    "devDependencies": {
+        "@types/express": "^4.16.0",
+        "@types/express-winston": "^3.0.0",
+        "@types/node": "^10.9.4",
+        "typescript": "^3.0.3"
+    }
+}

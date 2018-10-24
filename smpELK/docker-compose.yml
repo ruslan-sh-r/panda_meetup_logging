@@ -1,0 +1,51 @@
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:6.4.1
+    container_name: elasticsearch1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - $PWD/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - "es-data:/usr/share/elasticsearch/data"
+    networks:
+      - network1
+
+  logstash:
+    image: logstash:5.6.12
+    container_name: logstash
+    command: logstash -f /config/
+    ports:
+      - "8081:8081"
+      - "28777:28777/udp"
+    volumes:
+      - $PWD/logstash/config:/config
+    networks:
+      - network1
+    depends_on:
+      - elasticsearch
+      
+  kibana:
+    image: kibana:6.4.1
+    container_name: kibana
+    ports:
+      - 5601:5601
+    volumes:
+      - $PWD/kibana/config/kibana.yml:/etc/kibana/kibana.yml
+    networks:
+      - network1
+    depends_on:
+      - elasticsearch
+
+volumes:
+   es-data:
+    driver: local
+
+networks:
+   network1:
+    driver: bridge
